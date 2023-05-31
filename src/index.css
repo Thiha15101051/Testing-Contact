@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-color {
+    @apply bg-orange-500
+}
+
+.text-color {
+    @apply text-gray-800
+}
+
+.text-50 {
+    @apply text-gray-500
+}
