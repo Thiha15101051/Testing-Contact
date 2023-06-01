@@ -3,15 +3,16 @@ import { useDisclosure } from "@mantine/hooks";
 import React from "react";
 import {FaUserCircle} from 'react-icons/fa'
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
 
 const Navbar = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const auth=false;
+  const auth=true;
+  const nav = useNavigate();
   return (
     <>
-      <div className=" flex py-3 bg-gray-300 lg:px-10 px-5 justify-between items-center">
+      <div className=" flex py-3 bg-gray-300 lg:px-10 px-5 justify-between items-center sticky top-0">
         <h1 className=" text-2xl lg:text-3xl font-semibold select-none cursor-pointer">
           Contactify
         </h1>
@@ -39,7 +40,7 @@ const Navbar = () => {
               </button>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item className=" text-center font-semibold">
+              <Menu.Item className=" text-center font-semibold" onClick={()=> nav('/user-detail')}>
                 Profile
               </Menu.Item>
               <Menu.Item color="red" className=" text-center font-semibold">
@@ -56,7 +57,7 @@ const Navbar = () => {
         <Drawer
           opened={opened}
           onClose={close}
-          size="50%"
+          size="70%"
           overlayProps={{ opacity: 0.5, blur: 4 }}
         >
           <div onClick={close}>
