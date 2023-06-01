@@ -5,11 +5,33 @@ import {FaUserCircle} from 'react-icons/fa'
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { useLogoutMutation } from "../../redux/api/authApi";
+import { removeUser } from "../../redux/feature/authSlice";
 
 const Navbar = () => {
+
   const [opened, { open, close }] = useDisclosure(false);
   const auth=true;
   const nav = useNavigate();
+
+  const [logOut] = useLogoutMutation();
+  const dispatch = useDispatch();
+
+  const token = Cookies.get("token");
+
+  const logOutHandler = async ()=>{
+       const {data} = await logOut(token);
+      //  console.log(data);
+
+       dispatch(removeUser());
+       if(data?.success)nav('/')
+
+       
+     
+  }
+
   return (
     <>
       <div className=" flex py-3 bg-gray-300 lg:px-10 px-5 justify-between items-center sticky top-0">
@@ -43,7 +65,7 @@ const Navbar = () => {
               <Menu.Item className=" text-center font-semibold" onClick={()=> nav('/user-detail')}>
                 Profile
               </Menu.Item>
-              <Menu.Item color="red" className=" text-center font-semibold">
+              <Menu.Item onClick={logOutHandler} color="red" className=" text-center font-semibold">
                 Log out
               </Menu.Item>
             </Menu.Dropdown>
