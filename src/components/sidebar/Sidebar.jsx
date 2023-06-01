@@ -9,10 +9,10 @@ import "./Sidebar.css";
 const Sidebar = () => {
   return (
     <>
-      <div className=" w-full h-[80vh] lg:h-[85vh] flex flex-col py-5 gap-5 lg:gap-10">
+      <div className=" w-fit h-[80vh] lg:h-[85vh] flex flex-col py-5 gap-5 lg:gap-10 fixed ">
         <div className=" w-full px-0 lg:px-2 flex">
-          <div className=" flex items-center gap-5 shadow-xl bg-orange-100 text-xl py-2 px-3 justify-center rounded-full">
-            <AiOutlinePlus size={"2rem"} />
+          <div className=" flex items-center gap-3 shadow-xl bg-orange-100 text-xl py-2 px-5 justify-center rounded-full">
+            <AiOutlinePlus size={"1.5rem"} />
             <button className="">Create contact</button>
           </div>
         </div>
