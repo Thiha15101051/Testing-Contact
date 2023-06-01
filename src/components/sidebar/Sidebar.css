@@ -1,0 +1,10 @@
+.active{
+    color: rgb(232, 168, 5);
+    background-color: rgba(252, 196, 54, 0.226);
+}
+.menu_hover:hover{
+    background-color: rgba(72, 71, 71, 0.114);
+}
+.active:hover{
+    background-color:rgba(252, 196, 54, 0.226);
+}
