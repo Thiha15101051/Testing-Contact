@@ -9,6 +9,9 @@ import User_detail from '../pages/details/user_detail/User_detail'
 import Password from '../components/password/Password'
 import Bin from '../components/fixAndManage/bin/Bin'
 import MergeAndFix from '../components/fixAndManage/mergeAndFix/MergeAndFix'
+import CreateContact_page from '../pages/CreateContact_page'
+import EditContact_page from '../pages/EditContact_page'
+import Contact_detail from '../pages/details/contact_detail/Contact_detail'
 
 const Path = () => {
   const auth=true;
@@ -24,12 +27,16 @@ const Path = () => {
         <div className={`w-full lg:w-4/5 py-5 ${auth? 'lg:w-4/5':'lg:w-full'}`}>
           <Routes>
             {/* <Route path="/" element={<Home_page />} /> */}
-            <Route path="/" element={<Dashboard />} />
+         
             <Route path="/recently_search" element={<Recently_search />} />
             <Route  path='/user-detail' element={<User_detail/>}/>
             <Route path='/pwd' element={<Password/>}/>
             <Route path='/trash' element={<Bin/>} />
             <Route path='/Merge_fix' element={<MergeAndFix/>}/>
+            <Route path="/" element={<Home_page />} />
+            <Route path="/contacts/create" element={<CreateContact_page />} />
+            <Route path="/contacts/edit/:id" element={<EditContact_page />} />
+            <Route path="/contacts/:id" element={<Contact_detail />} />
           </Routes>
         </div>
       </div>
