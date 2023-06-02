@@ -2,16 +2,23 @@ import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useForm } from "@mantine/form";
 import { PasswordInput, Group, Button, Box } from "@mantine/core";
+import { usePasswordChangingMutation } from "../../redux/api/authApi";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Password = () => {
+  const token = Cookies.get("token");
+  const [passwordChanging] = usePasswordChangingMutation();
+  const nav = useNavigate();
   const form = useForm({
     initialValues: {
-      password: "secret",
-      confirmPassword: "seret",
+        current_password: "",
+      password: "",
+      password_confirmation: "",
     },
 
     validate: {
-      confirmPassword: (value, values) =>
+      password_confirmation: (value, values) =>
         value !== values.password ? "Passwords did not match" : null,
     },
   });
@@ -24,12 +31,22 @@ const Password = () => {
           <h4>Email</h4>
         </div>
         <Box mx="" className=" w-full">
-          <form onSubmit={form.onSubmit((values) => console.log(values))}>
-            <h4 className=" md:text-2xl">Password</h4>
+          <form
+            onSubmit={form.onSubmit(async (values) => {
+              
+              const { data, error } = await passwordChanging({ values, token });
+              if (data?.success) {
+                nav("/login");
+            } else if (error) {
+                setFailed(error?.data?.message);
+            }
+            })}
+          >
+            <h4 className=" md:text-2xl mb-3">Password</h4>
             <PasswordInput
               label="Current Password"
-              placeholder="Password"
-              {...form.getInputProps("password")}
+              placeholder="Current Password"
+              {...form.getInputProps("current_password")}
             />
 
             <PasswordInput
@@ -43,7 +60,7 @@ const Password = () => {
               mt="sm"
               label="Confirm password"
               placeholder="Confirm password"
-              {...form.getInputProps("confirmPassword")}
+              {...form.getInputProps("password_confirmation")}
             />
             <button className=" btn-color py-1 px-2 rounded mt-3" type="submit">
               Submit

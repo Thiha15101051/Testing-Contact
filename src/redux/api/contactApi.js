@@ -50,6 +50,14 @@ export const contactApi = createApi({
       }),
       invalidatesTags: ["contacts"],
     }),
+
+    getProfile: builder.query({
+      query: (token) => ({
+        url: "/user-profile",
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["contacts"],
+    }),
   }),
 });
 
@@ -61,4 +69,5 @@ export const {
   useDeleteContactMutation,
   useGetSingleContactQuery,
   useUpdateContactMutation,
+  useGetProfileQuery,
 } = contactApi;

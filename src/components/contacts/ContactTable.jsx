@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useDeleteContactMutation,
   useGetAllContactsQuery,
@@ -13,10 +13,18 @@ import "./contactTable.css";
 import Swal from "sweetalert2";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { addContacts, setSearchTerm } from "../../redux/feature/contactSlice";
+import {
+  addContacts,
+  removeFavorite,
+  setFavorite,
+  setSearchTerm,
+} from "../../redux/feature/contactSlice";
 import { Input } from "@material-tailwind/react";
+import { MdOutlineFavorite } from "react-icons/md";
+import Cookies from "js-cookie";
+
 const ContactTable = () => {
-  const token = "20|fiVlk0nYuEA3Jzt8HULJHucBHNzW4hvWzMopuWSF";
+  const token = Cookies.get("token");
   const { data, isLoading, isError, isSuccess } = useGetAllContactsQuery(token);
   const [deleteContact] = useDeleteContactMutation();
   const nav = useNavigate();
@@ -38,7 +46,9 @@ const ContactTable = () => {
     });
   };
   const contactsData = useSelector((state) => state.contactSlice.contacts);
+  const favorite = useSelector((state) => state.contactSlice.favorite);
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
+  console.log(favorite);
   console.log(contactsData);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -56,11 +66,13 @@ const ContactTable = () => {
           : contactsData.filter((contact) =>
               contact.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
-    
+
       const rows =
         displayContactsData.length === 0 ? (
           <tr>
-            <td className=" text-center" colSpan={4}>No contacts found </td>
+            <td className=" text-center" colSpan={4}>
+              No contacts found{" "}
+            </td>
           </tr>
         ) : (
           displayContactsData.map((contact) => (
@@ -72,8 +84,20 @@ const ContactTable = () => {
 
               <td className=" ">{contact.phone}</td>
               <td>{contact.address}</td>
-              <td className=" child">
-                {" "}
+              <td className=" child flex items-center gap-3">
+                <MdOutlineFavorite
+                  onClick={() => {
+                    if (contact.isFavourite) {
+                      dispatch(removeFavorite(contact));
+                    } else {
+                      dispatch(setFavorite(contact));
+                    }
+                  }}
+                  size={"1.5rem"}
+                  className={
+                    contact?.isFavourite ? "text-orange-500" : "text-gray-500"
+                  }
+                />
                 <Menu width={200} shadow="md">
                   <Menu.Target>
                     <button className=" p-2 border bg-white shadow-sm">
@@ -113,7 +137,7 @@ const ContactTable = () => {
       return (
         <div>
           <div className="my-2">
-            <div className="relative flex w-full gap-2 md:w-max">
+            <div className="relative flex w-full gap-2 md:w-max ">
               <Input
                 type="search"
                 label="Search here..."
@@ -126,7 +150,7 @@ const ContactTable = () => {
               />
             </div>
           </div>
-          <Table highlightOnHover>
+          <Table highlightOnHover className="select-none">
             <colgroup>
               <col style={{ width: "30%" }} />
               <col style={{ width: "30%" }} />

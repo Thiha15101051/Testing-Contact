@@ -1,7 +1,7 @@
 import { Button, Drawer, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React from "react";
-import {FaUserCircle} from 'react-icons/fa'
+import { FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
@@ -11,27 +11,25 @@ import { useLogoutMutation } from "../../redux/api/authApi";
 import { removeUser } from "../../redux/feature/authSlice";
 
 const Navbar = () => {
-
   const [opened, { open, close }] = useDisclosure(false);
-  const auth=true;
+  const token = Cookies.get("token");
+  const auth = token ? true : false;
   const nav = useNavigate();
 
   const [logOut] = useLogoutMutation();
   const dispatch = useDispatch();
 
-  const token = Cookies.get("token");
+  const logOutHandler = async () => {
+    const { data } = await logOut(token);
+    //  console.log(data);
 
-  const logOutHandler = async ()=>{
-       const {data} = await logOut(token);
-      //  console.log(data);
+    dispatch(removeUser());
+    if (data?.success) nav("/");
+  };
 
-       dispatch(removeUser());
-       if(data?.success)nav('/')
+  // const user = JSON.parse(Cookies.get('user'))
 
-       
-     
-  }
-
+  // console.log(user);
   return (
     <>
       <div className=" flex py-3 bg-gray-300 lg:px-10 px-5 justify-between items-center sticky top-0">
@@ -54,7 +52,7 @@ const Navbar = () => {
 
         {/* After authentication */}
         <div className={`flex items-center gap-5 ${auth ? "flex" : "hidden"}`}>
-          <h3>Mg Mg</h3>
+          <h3></h3>
           <Menu shadow="md" width={100} withArrow position="bottom-end">
             <Menu.Target>
               <button className=" hover:text-gray-800">
@@ -62,10 +60,17 @@ const Navbar = () => {
               </button>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item className=" text-center font-semibold" onClick={()=> nav('/user-detail')}>
+              <Menu.Item
+                className=" text-center font-semibold"
+                onClick={() => nav("/user-detail")}
+              >
                 Profile
               </Menu.Item>
-              <Menu.Item onClick={logOutHandler} color="red" className=" text-center font-semibold">
+              <Menu.Item
+                onClick={logOutHandler}
+                color="red"
+                className=" text-center font-semibold"
+              >
                 Log out
               </Menu.Item>
             </Menu.Dropdown>

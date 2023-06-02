@@ -1,7 +1,10 @@
 import React from "react";
+import ContactTable from "../contacts/ContactTable";
 
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return <div>
+    <ContactTable/>
+  </div>;
 };
 
 export default Dashboard;

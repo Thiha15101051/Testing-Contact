@@ -10,8 +10,12 @@ import { FaHome } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
+import Cookies from "js-cookie";
+
+
 const EditContactForm = () => {
-  const token = "20|fiVlk0nYuEA3Jzt8HULJHucBHNzW4hvWzMopuWSF";
+  const token = Cookies.get('token');
+
   const { id } = useParams();
 
   const {
@@ -68,7 +72,7 @@ const EditContactForm = () => {
             });
             console.log(data);
             form.reset();
-            nav("/");
+            nav("/dashboard");
           })}
           className=" flex-col flex gap-8"
         >
