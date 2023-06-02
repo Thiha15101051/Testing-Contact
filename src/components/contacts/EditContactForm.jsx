@@ -11,6 +11,7 @@ import { MdEmail } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import Cookies from "js-cookie";
+import { notifications } from "@mantine/notifications";
 
 
 const EditContactForm = () => {
@@ -73,6 +74,10 @@ const EditContactForm = () => {
             console.log(data);
             form.reset();
             nav("/dashboard");
+            notifications.show({
+              title: "Contact Notification",
+              message: `${values?.name} is successfully updated!`,
+            });
           })}
           className=" flex-col flex gap-8"
         >

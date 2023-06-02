@@ -7,6 +7,7 @@ import { FaHome } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { notifications } from "@mantine/notifications";
 const CreateContactForm = () => {
   const token = Cookies.get('token');
 
@@ -38,6 +39,10 @@ const CreateContactForm = () => {
           console.log(data);
           form.reset();
           nav("/dashboard");
+          notifications.show({
+            title: "Contact Notification",
+            message: `${values?.name} is successfully added into the Contact List !`,
+          });
         })}
         className=" flex-col flex gap-8"
       >

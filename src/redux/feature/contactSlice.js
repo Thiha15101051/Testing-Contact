@@ -1,3 +1,4 @@
+import { notifications } from "@mantine/notifications";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -13,6 +14,7 @@ export const contactSlice = createSlice({
       state.contacts = payload?.map((item) => {
         return { ...item, isFavourite: false };
       });
+  
     },
     setSearchTerm: (state, { payload }) => {
       state.searchTerm = payload;
@@ -30,6 +32,11 @@ export const contactSlice = createSlice({
         });
       }
       state.favorite = [...state.favorite, payload];
+      notifications.show({
+        title: "Contact Notification",
+        message: `${payload?.name} is successfully added into the Favourite List !`,
+      });
+    
     },
     removeFavorite: (state, { payload }) => {
       const id = state.favorite.find((item) => item.id === payload.id);
@@ -43,6 +50,10 @@ export const contactSlice = createSlice({
         state.contacts?.map((item) => {
           if (item.id === payload.id) {
             item.isFavourite = !item.isFavourite;
+            notifications.show({
+              title: "Contact Notification",
+              message: `${payload?.name} is successfully removed from the Favourite List !`,
+            });
           } else {
             state.contacts = [...state.contacts];
           }

@@ -22,6 +22,7 @@ import {
 import { Input } from "@material-tailwind/react";
 import { MdOutlineFavorite } from "react-icons/md";
 import Cookies from "js-cookie";
+import { notifications } from "@mantine/notifications";
 
 const ContactTable = () => {
   const token = Cookies.get("token");
@@ -29,7 +30,7 @@ const ContactTable = () => {
   const [deleteContact] = useDeleteContactMutation();
   const nav = useNavigate();
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (contact,id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -42,6 +43,10 @@ const ContactTable = () => {
       if (result.isConfirmed) {
         const data = await deleteContact({ id, token });
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        notifications.show({
+          title: "Contact Notification",
+          message: `${contact?.name} is successfully deleted from the Contact List !`,
+        });
       }
     });
   };
@@ -124,7 +129,7 @@ const ContactTable = () => {
                     <Menu.Item
                       icon={<FaTrash />}
                       component="a"
-                      onClick={() => deleteHandler(contact.id)}
+                      onClick={() => deleteHandler(contact,contact.id)}
                     >
                       Delete
                     </Menu.Item>
