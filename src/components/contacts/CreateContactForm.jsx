@@ -6,8 +6,10 @@ import { BsFillPersonFill, BsTelephoneFill } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 const CreateContactForm = () => {
-  const token = "20|fiVlk0nYuEA3Jzt8HULJHucBHNzW4hvWzMopuWSF";
+  const token = Cookies.get('token');
+
   const [createContact] = useCreateContactMutation();
   const nav = useNavigate();
   const form = useForm({
@@ -35,7 +37,7 @@ const CreateContactForm = () => {
           const data = await createContact({ data: values, token });
           console.log(data);
           form.reset();
-          nav("/");
+          nav("/dashboard");
         })}
         className=" flex-col flex gap-8"
       >

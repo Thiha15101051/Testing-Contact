@@ -1,17 +1,27 @@
 import { Badge } from "@mantine/core";
 import React from "react";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlinePlus ,AiFillHome} from "react-icons/ai";
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
-import { MdRecentActors, MdOutlineFavorite,MdOutlineAutoFixHigh } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import {
+  MdRecentActors,
+  MdOutlineFavorite,
+  MdOutlineAutoFixHigh,
+} from "react-icons/md";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Sidebar.css";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const contactsData = useSelector((state) => state.contactSlice.contacts);
+  const nav = useNavigate()
+
   return (
     <>
       <div className=" w-fit h-[80vh] lg:h-[85vh] flex flex-col py-5 gap-5 lg:gap-10 fixed ">
         <div className=" w-full px-0 lg:px-2 flex">
-          <div className=" flex items-center gap-3 shadow-xl bg-orange-100 text-xl py-2 px-5 justify-center rounded-full">
+          <div className=" flex items-center gap-3 shadow-xl bg-orange-100 text-xl py-2 px-5 justify-center rounded-full" onClick={() => {
+            return nav('/contacts/create')
+          }}>
             <AiOutlinePlus size={"1.5rem"} />
             <button className="">Create contact</button>
           </div>
@@ -19,6 +29,15 @@ const Sidebar = () => {
         <div className=" w-full  lg:px-0">
           <NavLink
             to={"/"}
+            className="flex items-center justify-between rounded-full text-md py-2 lg:rounded-none lg:rounded-e-full px-5 menu_hover"
+          >
+            <div className="flex gap-5 items-center">
+              <AiFillHome />
+              <button>Home</button>
+            </div>
+          </NavLink>
+          <NavLink
+            to={"/dashboard"}
             className={
               "flex items-center justify-between rounded-full text-md py-2 lg:rounded-none lg:rounded-e-full px-5 menu_hover"
             }
@@ -27,7 +46,7 @@ const Sidebar = () => {
               <BsFillPersonFill />
               <button>Contacts</button>
             </div>
-            <Badge color="yellow">20</Badge>
+            <Badge color="yellow">{contactsData?.length}</Badge>
           </NavLink>
           <NavLink
             to={"/recently_search"}
@@ -35,7 +54,7 @@ const Sidebar = () => {
           >
             <div className="flex gap-5 items-center">
               <MdRecentActors />
-              <button>Recently search</button>
+              <button disabled>Recently visit</button>
             </div>
           </NavLink>
           <NavLink

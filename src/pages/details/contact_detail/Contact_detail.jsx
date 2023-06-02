@@ -11,9 +11,11 @@ import { BsTelephoneFill, BsThreeDotsVertical } from "react-icons/bs";
 import ContactAvatar from "../../../components/contacts/ContactAvatar";
 import { Menu } from "@mantine/core";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const Contact_detail = () => {
-  const token = "20|fiVlk0nYuEA3Jzt8HULJHucBHNzW4hvWzMopuWSF";
+  const token = Cookies.get("token");
+
   const { id } = useParams();
   const nav = useNavigate();
   const { data, isSuccess, isLoading } = useGetSingleContactQuery({
@@ -66,30 +68,30 @@ const Contact_detail = () => {
             {contact.address}
           </div>
           <div className="absolute top-[5%] right-[5%]">
-          <Menu width={200} shadow="md">
-                <Menu.Target>
-                  <button className=" p-2 border bg-white shadow-sm">
-                    <BsThreeDotsVertical />
-                  </button>
-                </Menu.Target>
+            <Menu width={200} shadow="md">
+              <Menu.Target>
+                <button className=" p-2 border bg-white shadow-sm">
+                  <BsThreeDotsVertical />
+                </button>
+              </Menu.Target>
 
-                <Menu.Dropdown>
-                  <Menu.Item
-                    icon={<MdModeEditOutline />}
-                    component="a"
-                    onClick={() => nav(`/contacts/edit/${contact.id}`)}
-                  >
-                    Edit
-                  </Menu.Item>
-                  <Menu.Item
-                    icon={<FaTrash />}
-                    component="a"
-                    onClick={() => deleteHandler(contact.id)}
-                  >
-                    Delete
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
+              <Menu.Dropdown>
+                <Menu.Item
+                  icon={<MdModeEditOutline />}
+                  component="a"
+                  onClick={() => nav(`/contacts/edit/${contact.id}`)}
+                >
+                  Edit
+                </Menu.Item>
+                <Menu.Item
+                  icon={<FaTrash />}
+                  component="a"
+                  onClick={() => deleteHandler(contact.id)}
+                >
+                  Delete
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
           </div>
         </div>
       </div>
