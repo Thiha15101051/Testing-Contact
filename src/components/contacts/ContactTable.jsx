@@ -5,7 +5,7 @@ import {
 } from "../../redux/api/contactApi";
 import { BsFillPersonPlusFill, BsThreeDotsVertical } from "react-icons/bs";
 import { BiSearchAlt } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, Table } from "@mantine/core";
 import { FaEye, FaTrash } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
@@ -23,14 +23,31 @@ import { Input } from "@material-tailwind/react";
 import { MdOutlineFavorite } from "react-icons/md";
 import Cookies from "js-cookie";
 import { notifications } from "@mantine/notifications";
+import Pagination_bar from "./Pagination_bar";
 
 const ContactTable = () => {
   const token = Cookies.get("token");
-  const { data, isLoading, isError, isSuccess } = useGetAllContactsQuery(token);
+
+  //pagination code start here//
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  //checkParam for checking 'page' search param in url, there is or not?
+  const checkParam = queryParams.has("page"); //
+
+  //getParam for getting query value from url to refetch query again//
+  const page = checkParam? queryParams.get("page"):1; //
+  //pagination end
+
+  const { data, isLoading, isError, isSuccess,refetch } = useGetAllContactsQuery({token,page});
   const [deleteContact] = useDeleteContactMutation();
   const nav = useNavigate();
 
-  const deleteHandler = (contact,id) => {
+  useEffect(()=>{
+    refetch()
+  },[page,refetch])
+  console.log(data);
+  const deleteHandler = (contact, id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -53,6 +70,7 @@ const ContactTable = () => {
   const contactsData = useSelector((state) => state.contactSlice.contacts);
   const favorite = useSelector((state) => state.contactSlice.favorite);
   const searchTerm = useSelector((state) => state.contactSlice.searchTerm);
+
   console.log(favorite);
   console.log(contactsData);
   const dispatch = useDispatch();
@@ -129,7 +147,7 @@ const ContactTable = () => {
                     <Menu.Item
                       icon={<FaTrash />}
                       component="a"
-                      onClick={() => deleteHandler(contact,contact.id)}
+                      onClick={() => deleteHandler(contact, contact.id)}
                     >
                       Delete
                     </Menu.Item>
@@ -172,6 +190,10 @@ const ContactTable = () => {
             </thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Pagination_bar
+            total_pages={data?.contacts?.last_page}
+            checkParam={checkParam}
+          />
         </div>
       );
     } else if (contactsData?.length == 0) {

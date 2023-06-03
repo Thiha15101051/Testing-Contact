@@ -9,8 +9,8 @@ export const contactApi = createApi({
   tagTypes: "contacts",
   endpoints: (builder) => ({
     getAllContacts: builder.query({
-      query: (token) => ({
-        url: `/contact`,
+      query: ({ token, page }) => ({
+        url: `/contact?page=${page}`,
         method: "GET",
         headers: { authorization: `Bearer ${token}` },
       }),
