@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { useRegisterMutation } from "../../redux/api/authApi";
 import { useNavigate } from "react-router";
-import { PasswordInput, TextInput } from "@mantine/core";
+import { Loader, PasswordInput, TextInput } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { BiKey, BiUser } from "react-icons/bi";
 import { GoMail } from "react-icons/go";
 import { BsShieldLock } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
 	const [failed, setFailed] = useState("");
-	const [register] = useRegisterMutation();
+	const [register, { isLoading }] = useRegisterMutation();
 	const nav = useNavigate();
 
 	const form = useForm({
@@ -32,92 +33,112 @@ const Register = () => {
 	});
 
 	return (
-		<div className="container mx-auto shadow-sm flex items-center   ">
-			<div className="  ">
-				<img
-					src="https://img.freepik.com/free-vector/sign-page-abstract-concept-illustration_335657-3875.jpg?size=626&ext=jpg"
-					className="hidden md:block w-auto"
-					alt=""
-				/>
-			</div>
-			<div className=" flex justify-center items-center h-screen w-full md:w-1/2">
-				<form
-					onSubmit={form.onSubmit(async (values) => {
-						const { data, error } = await register(values);
-						if (data?.success) {
-							nav("/login");
-						} else if (error) {
-							setFailed(error?.data?.message);
-						}
-					})}
-					className=" flex flex-col gap-6 w-96 p-7 "
-				>
-					<h2 className=" text-gray-800 font-medium text-2x">Register</h2>
+		<section className=" bg-gray-50 min-h-screen flex items-center justify-center">
+			<div className="  flex rounded-xl shadow-md max-w-full items-center p-5 justify-center">
+				<div className=" md:w-1/2 px-8 md:px-16">
+					<h2 className=" font-bold text-2xl text-color text-center">
+						Register
+					</h2>
+					<p className=" text-sm font-light text-color mb-3 text-center">
+						Welcome, if you are not a member, sign up here
+					</p>
+					<form
+						onSubmit={form.onSubmit(async (values) => {
+							const { data, error } = await register(values);
+							if (data?.success) {
+								nav("/login");
+							} else if (error) {
+								setFailed(error?.data?.message);
+							}
+						})}
+						className=" flex flex-col gap-4  p-7 shadow "
+					>
+						<div className=" flex gap-3 items-center">
+							<BiUser className=" text-xl mr-3" />
 
-					<div className=" flex gap-3 items-center">
-						<BiUser className=" text-xl mr-3" />
+							<TextInput
+								required
+								withAsterisk
+								className=" w-full"
+								{...form.getInputProps("name")}
+								placeholder="Enter your name..."
+							/>
+						</div>
 
-						<TextInput
-						required
-							withAsterisk
-							className=" w-full"
-							{...form.getInputProps("name")}
-							placeholder="Enter your name..."
-						/>
+						<div className=" flex gap-3 items-center">
+							<GoMail className=" text-xl mr-3" />
+
+							<TextInput
+								required
+								withAsterisk
+								className=" w-full"
+								{...form.getInputProps("email")}
+								placeholder="Enter your email..."
+							/>
+						</div>
+						<div className=" flex gap-3 items-center">
+							<BiKey className=" text-xl mr-3" />
+
+							<PasswordInput
+								required
+								className=" w-full"
+								{...form.getInputProps("password")}
+								placeholder="Enter your password ..."
+							/>
+						</div>
+						<div className="flex gap-3 items-center">
+							<BsShieldLock className=" text-xl mr-3" />
+
+							<PasswordInput
+								required
+								className=" w-full"
+								{...form.getInputProps("password_confirmation")}
+								placeholder="Retype your password ..."
+							/>
+						</div>
+						
+
+						{failed?.length != 0 ? (
+							<p className=" text-red-600 text-sm m-0">{failed}</p>
+						) : null}
+						<button
+							disabled={isLoading && true}
+							type="submit"
+							className=" btn-color text-color px-4 py-2 rounded tracking-wider shadow-sm hover:bg-orange-700 duration-300"
+						>
+							{isLoading ? <Loader className="block mx-auto" color="#fff" variant="dots" /> : "Sign up"}
+						</button>
+					</form>
+					<div className=" my-3 grid grid-cols-3 items-center text-gray-400">
+						<hr className="border-gray-400" />
+						<p className="text-center text-sm">OR</p>
+						<hr className="border-gray-400" />
 					</div>
-
-					<div className=" flex gap-3 items-center">
-						<GoMail className=" text-xl mr-3" />
-
-						<TextInput
-						required
-							withAsterisk
-							className=" w-full"
-							{...form.getInputProps("email")}
-							placeholder="Enter your email..."
-						/>
-					</div>
-					<div className=" flex gap-3 items-center">
-						<BiKey className=" text-xl mr-3" />
-
-						<PasswordInput
-						required
-							className=" w-full"
-							{...form.getInputProps("password")}
-							placeholder="Enter your password ..."
-						/>
-					</div>
-					<div className="flex gap-3 items-center">
-						<BsShieldLock className=" text-xl mr-3" />
-
-						<PasswordInput
-						required
-							className=" w-full"
-							{...form.getInputProps("password_confirmation")}
-							placeholder="Retype your password ..."
-						/>
-					</div>
-					<div className=" flex gap-3">
-						<p className=" select-none text-gray-400">
-							Already have an account
+					<button className=" border rounded py-2 w-full flex justify-center items-center text-sm hover:bg-gray-300 duration-300">
+						<FcGoogle className=" text-2xl mr-3" />
+						Sign up with Google
+					</button>
+					<div className="flex justify-between items-center my-3 ">
+						<p className=" text-xs text-color font-extralight">
+							Already have an account?
 						</p>
-						<Link to={"/login"}>
-							<p className=" cursor-pointer select-none text-gray-400">Login</p>
+						<Link to={'/login'}>
+						
+						<button className="  outline outline-offset-1 outline-gray-100 px-4 text-sm py-2 flex items-center gap-2 rounded-md tracking-wider shadow-sm hover:bg-orange-500 hover:text-white duration-300">
+							Login
+						</button>
 						</Link>
 					</div>
-
-					{failed?.length != 0 ? (
-						<p className=" text-red-600 text-sm m-0">{failed}</p>
-					) : null}
-					<button
-						type="submit"
-						className=" bg-purple-600 text-white px-4 py-2 rounded"
-					>
-						Sign up
-					</button>
-				</form>
+				</div>
+				<div className="md:block w-1/2 hidden">
+					<img
+						src="https://img.freepik.com/free-vector/sign-page-abstract-concept-illustration_335657-3875.jpg?size=626&ext=jpg"
+						className=" rounded"
+						alt=""
+					/>
+				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
