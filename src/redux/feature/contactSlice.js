@@ -80,20 +80,20 @@ export const contactSlice = createSlice({
       }
 
       // Adjust fav contacts after remove wherever you want
-      // const cid = state.contacts.find((item) => item.id === payload.id);
-      // if (cid) {
-      //   state.contacts?.map((item) => {
-      //     if (item.id === payload.id) {
-      //       item.isFavourite = !item.isFavourite;
-      //       notifications.show({
-      //         title: "Contact Notification",
-      //         message: `${payload?.name} is successfully removed from the Favourite List !`,
-      //       });
-      //     } else {
-      //       return state.contacts;
-      //     }
-      //   });
-      // }
+      const cid = state.contacts.find((item) => item.id === payload.id);
+      if (cid) {
+        state.contacts?.map((item) => {
+          if (item.id === payload.id) {
+            item.isFavourite = !item.isFavourite;
+            notifications.show({
+              title: "Contact Notification",
+              message: `${payload?.name} is  removed from the Favourite List !`,
+            });
+          } else {
+            return state.contacts;
+          }
+        });
+      }
 
       // Remove fav icon after remove wherever you want in recently visit page
       const vid = state.contacts.find((item) => item.id === payload.id);
@@ -143,7 +143,7 @@ export const contactSlice = createSlice({
             item.isFavourite = !item.isFavourite;
             notifications.show({
               title: "Contact Notification",
-              message: `${payload?.name} is successfully removed from the Favourite List !`,
+              message: `${payload?.name} is removed from the Recent List !`,
             });
           } else {
             return state.contacts;

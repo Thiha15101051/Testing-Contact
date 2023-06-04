@@ -107,58 +107,59 @@ const ContactTable = () => {
                 <p>{contact.name}</p>
                 <span className=" text-gray-600">{contact.email}</span>
               </td>
-
-              <td className=" ">{contact.phone}</td>
-              <td>{contact.address}</td>
-              <td className=" child flex items-center gap-3">
+              <td className="hide-on-mobile">{contact.phone}</td>
+              <td className="hide-on-mobile">{contact.address}</td>
+              <td className=" ">
+                <div className="child flex items-center gap-3">
                 <MdOutlineFavorite
-                  onClick={() => {
-                    if (contact.isFavourite) {
-                      dispatch(removeFavorite(contact));
-                    } else {
-                      dispatch(setFavorite(contact));
-                    }
-                  }}
-                  size={"1.5rem"}
-                  className={`cursor-pointer ${
-                    contact?.isFavourite ? "text-orange-500" : "text-gray-500"
-                  }`}
-                />
-                <Menu width={200} shadow="md">
-                  <Menu.Target>
-                    <button className=" p-2 border bg-white shadow-sm">
-                      <BsThreeDotsVertical />
-                    </button>
-                  </Menu.Target>
+                    onClick={() => {
+                      if (contact.isFavourite) {
+                        dispatch(removeFavorite(contact));
+                      } else {
+                        dispatch(setFavorite(contact));
+                      }
+                    }}
+                    size={"1.5rem"}
+                    className={`cursor-pointer ${
+                      contact?.isFavourite ? "text-orange-500" : "text-gray-500"
+                    }`}
+                  />
+                  <Menu width={200} shadow="md">
+                    <Menu.Target>
+                      <button className=" p-2 border bg-white shadow-sm">
+                        <BsThreeDotsVertical />
+                      </button>
+                    </Menu.Target>
 
-                  <Menu.Dropdown>
-                    <Menu.Item
-                      icon={<FaEye />}
-                      component="a"
-                      onClick={() => {
-                        dispatch(setVisit(contact));
-                        nav(`/contacts/${contact.id}`);
-                      }}
-                    >
-                      View
-                    </Menu.Item>
+                    <Menu.Dropdown>
+                      <Menu.Item
+                        icon={<FaEye />}
+                        component="a"
+                        onClick={() => {
+                          dispatch(setVisit(contact));
+                          nav(`/contacts/${contact.id}`);
+                        }}
+                      >
+                        View
+                      </Menu.Item>
 
-                    <Menu.Item
-                      icon={<MdModeEditOutline />}
-                      component="a"
-                      onClick={() => nav(`/contacts/edit/${contact.id}`)}
-                    >
-                      Edit
-                    </Menu.Item>
-                    <Menu.Item
-                      icon={<FaTrash />}
-                      component="a"
-                      onClick={() => deleteHandler(contact, contact.id)}
-                    >
-                      Delete
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
+                      <Menu.Item
+                        icon={<MdModeEditOutline />}
+                        component="a"
+                        onClick={() => nav(`/contacts/edit/${contact.id}`)}
+                      >
+                        Edit
+                      </Menu.Item>
+                      <Menu.Item
+                        icon={<FaTrash />}
+                        component="a"
+                        onClick={() => deleteHandler(contact, contact.id)}
+                      >
+                        Delete
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                </div>
               </td>
             </tr>
           ))
@@ -179,24 +180,19 @@ const ContactTable = () => {
               />
             </div>
           </div>
-          <Table highlightOnHover className="select-none">
-            <colgroup>
-              <col style={{ width: "30%" }} />
-              <col style={{ width: "30%" }} />
-              <col style={{ width: "30%" }} />
-              <col style={{ width: "10%" }} />
-            </colgroup>
+          <Table highlightOnHover className="select-none mb-5">
+          <colgroup><col style={{ width: "30%" }} /> {/* Always show the name column */}<col style={{ width: "30%" }} className="hide-on-mobile" /> {/* Hide on mobile */}<col style={{ width: "30%" }} className="hide-on-mobile" /> {/* Hide on mobile */}<col style={{ width: "10%" }} /> {/* Hide on mobile */}</colgroup>
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Phone Number</th>
-                <th>Address</th>
-                <th className=""></th>
+                <th className="hide-on-mobile">Phone Number</th> {/* Hide on mobile */}
+                <th className="hide-on-mobile">Address</th> {/* Hide on mobile */}
+                <th className=""></th> {/* Hide on mobile */}
               </tr>
             </thead>
             <tbody>{rows}</tbody>
           </Table>
-          <Pagination_bar
+          <Pagination_bar 
             total_pages={data?.contacts?.last_page}
             checkParam={checkParam}
           />

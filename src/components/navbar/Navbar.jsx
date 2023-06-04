@@ -1,4 +1,4 @@
-import { Button, Drawer, Menu } from "@mantine/core";
+import {  Drawer, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
@@ -84,7 +84,7 @@ const Navbar = () => {
         <Drawer
           opened={opened}
           onClose={close}
-          size="50%"
+          size="60%"
           overlayProps={{ opacity: 0.5, blur: 4 }}
         >
           <div onClick={close}>
