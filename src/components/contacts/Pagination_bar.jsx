@@ -29,9 +29,9 @@ const Pagination_bar = ({ total_pages, checkParam }) => {
         search: queryParams.toString(),
       });
   }, [page]);
-  console.log(total_pages);
-  console.log(page);
-  console.log(checkParam);
+  // console.log(total_pages);
+  // console.log(page);
+  // console.log(checkParam);
   return (
     <>
       <Pagination

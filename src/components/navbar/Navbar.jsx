@@ -84,12 +84,12 @@ const Navbar = () => {
         <Drawer
           opened={opened}
           onClose={close}
-          size="70%"
+          size="50%"
           overlayProps={{ opacity: 0.5, blur: 4 }}
         >
           <div onClick={close}>
             <Link to={"/dashboard"} className=" text-3xl">
-              <div className=" text-center font-semibold">Contactify</div>
+              <div className=" md:text-center font-semibold">Contactify</div>
             </Link>
             <Sidebar />
           </div>

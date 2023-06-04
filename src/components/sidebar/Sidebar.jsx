@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const contactsData = useSelector((state) => state.contactSlice.contacts);
+  const favorite = useSelector((state) => state.contactSlice.favorite);
+
   const nav = useNavigate()
 
   return (
@@ -54,7 +56,7 @@ const Sidebar = () => {
           >
             <div className="flex gap-5 items-center">
               <MdRecentActors />
-              <button disabled>Recently visit</button>
+              <button>Recently visit</button>
             </div>
           </NavLink>
           <NavLink
@@ -63,8 +65,9 @@ const Sidebar = () => {
           >
             <div className="flex gap-5 items-center">
               <MdOutlineFavorite />
-              <button>Favourite contacts</button>
+              <button>Favourite</button>
             </div>
+            <Badge color="yellow">{favorite?.length}</Badge>
           </NavLink>
         </div>
         <div className=" w-full">
