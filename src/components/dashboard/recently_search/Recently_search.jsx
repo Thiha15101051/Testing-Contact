@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { Menu, Table } from "@mantine/core";
 import { FaEye, FaTrash } from "react-icons/fa";
 import { MdModeEditOutline, MdOutlineFavorite } from "react-icons/md";
-import "./recently_search.css";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "@material-tailwind/react";
