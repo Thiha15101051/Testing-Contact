@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLoginMutation } from "../../redux/api/authApi";
 import { useNavigate } from "react-router";
-import { Loader, PasswordInput, TextInput } from "@mantine/core";
+import { Alert, Loader, PasswordInput, TextInput } from "@mantine/core";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/feature/authSlice";
 import { useForm } from "@mantine/form";
@@ -12,7 +12,7 @@ import { SyncLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-	const [failed, setFailed] = useState("");
+	const [failed, setFailed] = useState(false);
 	const form = useForm({
 		initialValues: {
 			email: "",
@@ -21,8 +21,9 @@ const Login = () => {
 
 		validate: {
 			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+			
 			password: (value) =>
-				value.length > 8 ? "Password must be 8 characters" : null,
+				value.length < 8 ? "Password must be 8 characters" : null,
 		},
 	});
 
@@ -35,51 +36,52 @@ const Login = () => {
 		<section className=" bg-gray-50 min-h-screen flex items-center justify-center">
 			<div className=" flex rounded-xl shadow-md max-w-full items-center p-5 justify-center">
 				<div className=" md:w-1/2 px-8 md:px-16">
-					<h2 className=" font-bold text-2xl text-color text-center">Login</h2>
+					<h2 className=" font-bold text-2xl text-color text-center mb-4">Login</h2>
 					<p className=" text-sm font-light text-color mb-3 text-center">Welcome, if you already a member, log in here</p>
 					<form
 						onSubmit={form.onSubmit(async (values) => {
 							const { data, error } = await login(values);
-							dispatch(addUser({ user: data?.user, token: data?.token }));
 							if (data?.success) {
+								dispatch(addUser({ user: data?.user, token: data?.token }));
 								nav("/");
-							} else if (error) {
-								setFailed(error?.data?.message);
+							} else  {
+								setFailed(true);
+								form.reset();
 							}
 						})}
 						className=" flex flex-col gap-4 w-full p-7 shadow "
 					>
+						 {failed && (
+							<Alert title="Login Failed!" color="red" >
+							  Please make sure your email and password are correct and try
+							  again.
+							</Alert>
+						  )}
 						<div className=" flex gap-3 items-center">
 							<GoMail className=" text-xl mr-3" />
 
-							<TextInput
-								required
+							<TextInput				
 								className=" w-full"
 								withAsterisk
 								{...form.getInputProps("email")}
 								placeholder="Enter your email..."
 							/>
-						</div>
-						{failed?.length != 0 ? (
-							<p className=" text-red-600 text-sm m-0">{failed}</p>
-						) : null}
+						</div>					
 						<div className=" flex gap-3 items-center">
 							<BiKey className=" text-xl mr-3" />
-							<PasswordInput
-								required
+							<PasswordInput	
 								className=" w-full"
 								withAsterisk
 								{...form.getInputProps("password")}
 								placeholder="Enter your password ..."
 							/>
 						</div>
-
 						<button
 							disabled={isLoading && true}
 							type="submit"
-							className=" btn-color text-color px-4 py-2 rounded tracking-wider shadow-sm hover:bg-orange-700 duration-300"
+							className=" btn-color text-white  font-semibold  px-4 py-2 rounded tracking-wider shadow-sm hover:bg-orange-700 duration-300"
 						>
-							{isLoading ? <Loader className="block mx-auto" color="#fff" variant="dots" /> : "Login"}
+							{isLoading ? <Loader className="block mx-auto py-1" color="#fff" variant="dots" size={"md"} /> : "Login"}
 						</button>
 					</form>
 					<div className=" my-3 grid grid-cols-3 items-center text-gray-400">
