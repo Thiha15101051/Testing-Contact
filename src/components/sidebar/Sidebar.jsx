@@ -12,7 +12,6 @@ import "./Sidebar.css";
 import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-  const contactsData = useSelector((state) => state.contactSlice.contacts);
   const favorite = useSelector((state) => state.contactSlice.favorite);
   const { contacts_quantity,fetchQueryFinished } = useSelector(
     (state) => state.contactSlice
@@ -53,7 +52,7 @@ const Sidebar = () => {
               <BsFillPersonFill />
               <button>Contacts</button>
             </div>
-            <Badge color="yellow">{contacts_quantity}</Badge>
+            <Badge color="yellow">{fetchQueryFinished ? contacts_quantity:null}</Badge>
           </NavLink>
           <NavLink
             to={"/recently_search"}

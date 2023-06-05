@@ -24,7 +24,6 @@ import {
 } from "../../redux/feature/contactSlice";
 import { Input } from "@material-tailwind/react";
 import { MdOutlineFavorite } from "react-icons/md";
-import Cookies from "js-cookie";
 import { notifications } from "@mantine/notifications";
 import Pagination_bar from "./Pagination_bar";
 
@@ -83,8 +82,7 @@ const ContactTable = () => {
   }, [data]);
   if (isLoading) {
     return <Loading />;
-  }
-  if (isSuccess) {
+  }else if (isSuccess) {
     if (contactsData?.length > 0) {
       const displayContactsData =
         searchTerm.trim() === ""
@@ -92,7 +90,7 @@ const ContactTable = () => {
           : contactsData.filter((contact) =>
               contact.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
-
+      console.log(contactsData)
       const rows =
         displayContactsData.length === 0 ? (
           <tr>
