@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Navbar from "../components/navbar/Navbar";
-import Sidebar from "../components/sidebar/Sidebar";
+// import Navbar from "../components/navbar/Navbar";
+// import Sidebar from "../components/sidebar/Sidebar";
 import Dashboard from "../components/dashboard/Dashboard";
 import Recently_search from "../components/dashboard/recently_search/Recently_search";
 import Home_page from "../pages/Home_page";
@@ -33,7 +33,7 @@ const Path = () => {
         <div
           className={`w-full py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}
         >
-          {/* <Routes>
+          <Routes>
             <Route path="/" element={<Home_page />} />
             <Route path="/dashboard" element={<Dashboard/>}/>
             <Route path="/recently_search" element={<Recently_search />} />
@@ -61,7 +61,7 @@ const Path = () => {
                 </RouteGuard>
               }
             />
-          </Routes> */}
+          </Routes>
         </div>
       </div>
     </>
