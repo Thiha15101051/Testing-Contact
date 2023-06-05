@@ -71,7 +71,7 @@ const Navbar = () => {
               </Menu.Item>
             </Menu.Dropdown>
           </Menu> */}
-          <div className=" flex lg:hidden">
+          <div className=" flex">
             <button>
               <HiOutlineMenuAlt3 onClick={open} size={"2.3rem"} />
             </button>
