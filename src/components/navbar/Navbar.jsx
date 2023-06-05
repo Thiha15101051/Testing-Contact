@@ -51,9 +51,9 @@ const Navbar = () => {
           <h3 className=" hidden lg:flex">{user?.name}</h3>
           <Menu shadow="lg" width={100} position="left-end">
             <Menu.Target>
-              <button className=" hover:text-gray-800">
+              <Button className=" hover:text-gray-800">
                 <FaUserCircle size={"2.5rem"} />
-              </button>
+              </Button>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item
