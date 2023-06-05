@@ -1,4 +1,4 @@
-// import { Drawer, Menu } from "@mantine/core";
+import {  Menu } from "@mantine/core";
 // import { useDisclosure } from "@mantine/hooks";
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
@@ -49,7 +49,7 @@ const Navbar = () => {
         {/* After authentication */}
         <div className={`flex items-center gap-5 ${auth ? "block" : "hidden"}`}>
           <h3 className=" hidden lg:flex">{user?.name}</h3>
-          {/* <Menu shadow="lg" width={100} position="left-end">
+          <Menu shadow="lg" width={100} position="left-end">
             <Menu.Target>
               <button className=" hover:text-gray-800">
                 <FaUserCircle size={"2.5rem"} />
@@ -70,8 +70,8 @@ const Navbar = () => {
                 Log out
               </Menu.Item>
             </Menu.Dropdown>
-          </Menu> */}
-          <div className=" flex">
+          </Menu>
+          <div className=" flex lg:hidden">
             <button>
               <HiOutlineMenuAlt3 onClick={open} size={"2.3rem"} />
             </button>
