@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-// import Navbar from "../components/navbar/Navbar";
-// import Sidebar from "../components/sidebar/Sidebar";
+import Navbar from "../components/navbar/Navbar";
+import Sidebar from "../components/sidebar/Sidebar";
 import Dashboard from "../components/dashboard/Dashboard";
 import Recently_search from "../components/dashboard/recently_search/Recently_search";
 import Home_page from "../pages/Home_page";
@@ -23,12 +23,12 @@ const Path = () => {
     const {token}=useSelector(state=>state.authSlice);
   return (
     <>
-      Navbar
+      <Navbar/>
       <div className=" flex">
         <div
           className={`hidden lg:flex lg:w-1/5 ${token ? "flex" : "lg:hidden"}`}
         >
-          sideBar
+          <Sidebar/>
         </div>
         <div
           className={`w-full py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}
