@@ -72,7 +72,7 @@ const Navbar = () => {
         </div>
 
         {/* After authentication */}
-        <div className=" flex gap-3">
+        <div className={`flex gap-3  lg:gap-5 ${auth ? "flex" : "hidden"}`}>
           <div
             className={`flex items-center gap-5 ${auth ? "block" : "hidden"}`}
           >
