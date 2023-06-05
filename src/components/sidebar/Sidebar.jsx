@@ -1,4 +1,3 @@
-import { Badge } from "@mantine/core";
 import React, { useEffect } from "react";
 import { AiOutlinePlus, AiFillHome } from "react-icons/ai";
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
@@ -13,7 +12,7 @@ import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const favorite = useSelector((state) => state.contactSlice.favorite);
-  const { contacts_quantity,fetchQueryFinished } = useSelector(
+  const { contacts_quantity, fetchQueryFinished } = useSelector(
     (state) => state.contactSlice
   );
   const nav = useNavigate();
@@ -43,7 +42,7 @@ const Sidebar = () => {
               <BsFillPersonFill />
               <button>Contacts</button>
             </div>
-            <Badge color="yellow">{contacts_quantity}</Badge>
+            <span>{contacts_quantity}</span>
           </NavLink>
           <NavLink
             to={"/recently_search"}
@@ -62,7 +61,7 @@ const Sidebar = () => {
               <MdOutlineFavorite />
               <button>Favourite</button>
             </div>
-            <Badge color="yellow">{favorite?.length}</Badge>
+            <span>{favorite?.length}</span>
           </NavLink>
         </div>
         <div className=" w-full">
