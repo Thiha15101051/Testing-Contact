@@ -28,7 +28,7 @@ const Path = () => {
         <div
           className={`hidden lg:flex lg:w-1/5 ${token ? "flex" : "lg:hidden"}`}
         >
-          <Sidebar />
+          {/* <Sidebar /> */}
         </div>
         <div
           className={`w-full py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}
