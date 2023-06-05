@@ -33,7 +33,7 @@ const Path = () => {
         <div
           className={`w-full py-5 ${token ? "lg:w-4/5" : "lg:w-full"}`}
         >
-          <Routes>
+          {/* <Routes>
             <Route path="/" element={<Home_page />} />
             <Route path="/dashboard" element={<Dashboard/>}/>
             <Route path="/recently_search" element={<Recently_search />} />
@@ -61,7 +61,7 @@ const Path = () => {
                 </RouteGuard>
               }
             />
-          </Routes>
+          </Routes> */}
         </div>
       </div>
     </>
